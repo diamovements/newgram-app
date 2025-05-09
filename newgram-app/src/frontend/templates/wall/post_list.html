@@ -1,0 +1,29 @@
+{% for post in posts %}
+<div class="card mb-4">
+    <div class="card-body">
+        <h5 class="card-title">
+            <a href="{% url 'profile_detail' post.user.id %}">{{ post.user.username }}</a>
+        </h5>
+        <p class="card-text">{{ post.text }}</p>
+        <small class="text-muted">{{ post.create_date }}</small>
+        <a href="{% url 'post_detail' post.id %}" class="btn btn-sm btn-primary">View</a>
+    </div>
+</div>
+{% empty %}
+<p>No posts yet.</p>
+{% endfor %}
+
+{% if user.is_authenticated and show_create_form %}
+<div class="card mb-4">
+    <div class="card-body">
+        <h5 class="card-title">ЛОпубликовать новый пост</h5>
+        <form method="post" action="{% url 'post_create' %}">
+            {% csrf_token %}
+            <div class="mb-3">
+                <textarea name="text" class="form-control" placeholder="О чем думаете?" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Опубликовать</button>
+        </form>
+    </div>
+</div>
+{% endif %}

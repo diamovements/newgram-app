@@ -1,0 +1,35 @@
+{% extends 'frontend/base.html' %}
+{% block content %}
+<h1>Wall</h1>
+<div id="wall-list"></div>
+<form id="wall-form">
+    <textarea name="text" id="wall-text"></textarea>
+    <button type="submit">Post</button>
+</form>
+{% endblock %}
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    fetch('/wall/')
+        .then(response => response.json())
+        .then(data => {
+            let html = '';
+            data.forEach(item => {
+                html += `<div>${item.text}</div>`;
+            });
+            document.getElementById('wall-list').innerHTML = html;
+        });
+
+    document.getElementById('wall-form').onsubmit = function(e) {
+        e.preventDefault();
+        fetch('/wall/', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({text: document.getElementById('wall-text').value})
+        })
+        .then(response => response.json())
+        .then(data => location.reload());
+    }
+});
+</script>
+{% endblock %}

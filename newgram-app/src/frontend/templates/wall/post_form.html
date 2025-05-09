@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Опубликовать пост - Newgram{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title mb-0">Опубликовать новый пост</h3>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="text" class="form-label">О чем думаете?</label>
+                        <textarea class="form-control" id="text" name="text" rows="4" required></textarea>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'feed' %}" class="btn btn-secondary">Отменить</a>
+                        <button type="submit" class="btn btn-primary">Опубликовать</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}Подписки - Newgram{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <h2 class="mb-4">Подписки</h2>
+        
+        {% if profiles %}
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                {% for profile in profiles %}
+                    <div class="col">
+                        <div class="card h-100">
+                            {% if profile.avatar %}
+                                <img src="{{ profile.avatar.url }}" class="card-img-top" alt="{{ profile.username }} аватар">
+                            {% endif %}
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <a href="{% url 'profile' profile.username %}" class="text-decoration-none">
+                                        {{ profile.username }}
+                                    </a>
+                                </h5>
+                                {% if profile.first_name or profile.last_name %}
+                                    <p class="card-text">
+                                        {{ profile.first_name }} {{ profile.last_name }}
+                                    </p>
+                                {% endif %}
+                                {% if profile.bio %}
+                                    <p class="card-text">{{ profile.bio|truncatewords:30 }}</p>
+                                {% endif %}
+                            </div>
+                            <div class="card-footer">
+                                <small class="text-muted">
+                                    {% if profile.github %}
+                                        <a href="{{ profile.github }}" target="_blank" class="text-decoration-none">
+                                            <i class="fab fa-github"></i> GitHub
+                                        </a>
+                                    {% endif %}
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-info">
+                Нет подписок.
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+{% endblock %} 

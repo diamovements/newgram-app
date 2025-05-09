@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PySoNet</title>
+    <link rel="stylesheet" href="{% static 'frontend/styles.css' %}">
+</head>
+<body>
+    <nav>
+        <a href="{% url 'profile' %}">Profile</a>
+        <a href="{% url 'wall' %}">Wall</a>
+        <a href="{% url 'feed' %}">Feed</a>
+        <a href="{% url 'followers' %}">Followers</a>
+    </nav>
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+    <script src="{% static 'frontend/main.js' %}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Лента - Newgram{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        {% if posts %}
+            {% for post in posts %}
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h5 class="card-title mb-0">
+                                <a href="{% url 'profile' post.author.username %}" class="text-decoration-none">
+                                    {{ post.author.username }}
+                                </a>
+                            </h5>
+                            <small class="text-muted">{{ post.created_at|date:"F j, Y, g:i a" }}</small>
+                        </div>
+                        <p class="card-text">{{ post.text }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="{% url 'post_detail' post.id %}" class="btn btn-outline-primary btn-sm">Комментарии</a>
+                            {% if post.author.username == request.user.username %}
+                                <div>
+                                    <a href="{% url 'post_edit' post.id %}" class="btn btn-outline-secondary btn-sm">Редактировать</a>
+                                    <a href="{% url 'post_delete' post.id %}" class="btn btn-outline-danger btn-sm" 
+                                       onclick="return confirm('Вы уверены, что хотите удалить пост?')">Удалить</a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="alert alert-info">
+                Пока нет постов. Подпишитесь на других пользователей, чтобы видеть их посты в вашей ленте!
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
